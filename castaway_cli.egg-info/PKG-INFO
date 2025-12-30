@@ -1,14 +1,32 @@
+Metadata-Version: 2.4
+Name: castaway-cli
+Version: 0.0.2
+Summary: castAway
+Author-email: madushnaka rajapakshe <MadushankaRajapaksha999@gmail.com>
+License: MIT
+Project-URL: Homepage, https://github.com/MadushankaRajapaksha/castAway
+Project-URL: Bug Tracker, https://github.com/MadushankaRajapaksha/castAway/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+Requires-Dist: rich>=10.0.0
+Requires-Dist: typer>=0.9.0
+Requires-Dist: textual>=0.1.0
+Requires-Dist: feedparser>=6.0.0
+Requires-Dist: requests>=2.0.0
+
 # 🎙️ Cast-Away
 Minimalist TUI Podcast Client for Hackers
 
 Cast-Away is a lightweight, keyboard-driven terminal application designed for developers who want to listen to podcasts without leaving their terminal environment. Built with Python and Textual, it provides a distraction-free experience with real-time audio visualization.
 
 ✨ Features
-- **One-Click Popular Feeds**: Add 12+ popular podcasts with a single click from curated categories.
-- **RSS Integration**: Add any public podcast RSS feed or enter custom URLs.
-- **Dynamic UI**: Responsive grid layout that maps your podcast library from a local database.
+- **RSS Integration**: Add any public podcast RSS feed (NPR, BBC, Darknet Diaries, etc.).
+- **Dynamic UI**: Responsive grid layout that maps your podcast library from a local JSON store.
 - **Smooth Playback**: Non-blocking audio streaming using Pygame.mixer.
-- **ASCII Visualizer**: Real-time audio Processbar in the terminal.
+- **ASCII Visualizer**: Real-time audio waveform animation in the terminal.
 - **Self-Contained**: No external dependencies required once compiled.
 
 🛠️ Requirements (TerminalCraft v2)
@@ -52,7 +70,8 @@ castAway/
 └── test.py         # Testing utilities
 ```
 
- 
+📸 Screenshots & Demo
+(Tip: Add a GIF here showing you searching for a podcast and playing it!)
 
 # 📖 User Guide: How to Get RSS Feeds
 
@@ -137,32 +156,12 @@ Here are some popular podcasts with their RSS feeds to get you started:
 
 ## ➕ Adding RSS Feeds to Cast-Away
 
-Cast-Away offers two easy ways to add podcasts:
-
-### Method 1: One-Click Popular Feeds (Recommended for Beginners)
+Once you have an RSS feed URL:
 
 1. **Launch Cast-Away**
-2. **Click "Add New Feed"** button
-3. **Browse curated categories** of popular podcasts:
-   - **Technology & Hacking**: Darknet Diaries, Security Now, Command Line Heroes
-   - **News & Current Affairs**: NPR News Now, BBC Global News, The Daily (NYT)
-   - **Technology & Development**: Syntax.fm, Software Engineering Daily, The Changelog
-   - **Storytelling & Entertainment**: This American Life, Radiolab, 99% Invisible
-4. **Click "Add"** next to any podcast to subscribe instantly
-5. **The app automatically fetches** episodes and adds them to your library
-
-### Method 2: Custom RSS Feeds
-
-If you want to add a podcast that's not in our curated list:
-
-1. **Launch Cast-Away**
-2. **Click "Add New Feed"** button
-3. **Scroll to "Or Add Custom Feed"** section
-4. **Paste the RSS feed URL** in the input field
-5. **Click "Add Feed"**
-6. **The app will fetch** and validate the feed automatically
-
-Both methods support the same RSS feed formats and will automatically detect podcast metadata like titles, descriptions, and episode information.
+2. **Use the application's interface** to add a new podcast subscription
+3. **Paste the RSS feed URL** when prompted
+4. **The app will automatically fetch** and display available episodes
 
 ## ✅ Verifying RSS Feeds
 
@@ -206,11 +205,11 @@ The Cast-Away interface consists of:
 ## 🎯 Quick Start Checklist
 
 - [ ] Install Cast-Away
-- [ ] Launch the app and click "Add New Feed"
-- [ ] Browse popular podcasts and add 3+ with one click
-- [ ] Or add custom podcasts by pasting RSS URLs
-- [ ] Test audio playback on any episode
-- [ ] Explore keyboard shortcuts for navigation
+- [ ] Find RSS feeds for your favorite podcasts
+- [ ] Add at least 3 podcasts to your library
+- [ ] Test audio playback
+- [ ] Explore keyboard shortcuts
+- [ ] Customize your interface preferences
 
 ## 🆘 Getting Help
 
@@ -223,9 +222,6 @@ If you encounter issues:
 5. **Report issues** on the GitHub repository
 
 ## ❓ Frequently Asked Questions
-
-**Q: How do I add podcasts?**
-A: Click "Add New Feed" and choose from popular podcasts with one click, or paste a custom RSS URL.
 
 **Q: Can I import my podcast subscriptions from other apps?**
 A: Yes, you can export OPML files from most podcast apps and import them into Cast-Away.

@@ -14,6 +14,20 @@ from .core import htmlpraser
 from .player import Player
 
 
+# Feed item component for predefined feeds
+class FeedItem(Static):
+    def __init__(self, feed_id, feed_data):
+        super().__init__()
+        self.feed_id = feed_id
+        self.feed_data = feed_data
+
+    def compose(self) -> ComposeResult:
+        with Horizontal():
+            with Vertical():
+                yield Static(f"🎙️ [bold]{self.feed_data['name']}[/bold]", classes="feed-name")
+                yield Static(self.feed_data['description'], classes="feed-description")
+            yield Button("Add", variant="primary", id=f"add-{self.feed_id}", classes="add-feed-btn")
+
 # Podcast box component
 class PodcastBox(Static):
     def __init__(self, name, url):
@@ -33,6 +47,70 @@ class PodcastBox(Static):
 class AddFeedScreen(Screen):
     """Popup screen for adding new podcast feeds."""
 
+    # Mapping of button IDs to RSS URLs and descriptions
+    PREDEFINED_FEEDS = {
+        "feed-1": {
+            "url": "https://feeds.megaphone.fm/darknetdiaries",
+            "name": "Darknet Diaries",
+            "description": "True stories from the dark side of the Internet.",
+        },
+        "feed-2": {
+            "url": "https://feeds.twit.tv/sn.xml",
+            "name": "Security Now",
+            "description": "Weekly security news with Steve Gibson and Leo Laporte.",
+        },
+        "feed-3": {
+            "url": "https://feeds.simplecast.com/3Y_p_T3I",  # Hacker Valley Studio (Working link)
+            "name": "Hacker Valley Studio",
+            "description": "Exploring the human condition in cybersecurity.",
+        },
+        "feed-4": {
+            "url": "https://feeds.npr.org/510318/podcast.xml",  # NPR Up First
+            "name": "NPR Up First",
+            "description": "The biggest stories and ideas of the day from NPR.",
+        },
+        "feed-5": {
+            "url": "https://podcasts.files.bbci.co.uk/p02nq0gn.rss",
+            "name": "BBC Global News",
+            "description": "The latest news from the BBC World Service.",
+        },
+        "feed-6": {
+            "url": "https://feeds.simplecast.com/54nAGcIl",
+            "name": "The Daily (NYT)",
+            "description": "This is how the news should sound. From The New York Times.",
+        },
+        "feed-7": {
+            "url": "https://feeds.simplecast.com/4qg_LgQw",
+            "name": "Syntax.fm",
+            "description": "Full Stack Web Development Podcast.",
+        },
+        "feed-8": {
+            "url": "https://changelog.com/podcast/feed",
+            "name": "The Changelog",
+            "description": "Conversations with open source maintainers and leaders.",
+        },
+        "feed-9": {
+            "url": "https://changelog.com/jsparty/feed",
+            "name": "JS Party",
+            "description": "A community celebration of JavaScript and the web.",
+        },
+        "feed-10": {
+            "url": "http://feeds.wnyc.org/radiolab",
+            "name": "Radiolab",
+            "description": "A show about curiosity. Where sound illuminates ideas.",
+        },
+        "feed-11": {
+            "url": "https://feeds.99percentinvisible.org/99percentinvisible",
+            "name": "99% Invisible",
+            "description": "A tiny radio show about design and architecture.",
+        },
+        "feed-12": {
+            "url": "https://feeds.megaphone.fm/sciencevs",
+            "name": "Science Vs",
+            "description": "Taking on fads, and the internet, with science.",
+        },
+    }
+
     CSS = """
     #top-bar {
         height: 3;
@@ -47,8 +125,55 @@ class AddFeedScreen(Screen):
         height: 100%;
         background: $surface;
     }
+    #predefined-feeds {
+        height: auto;
+        max-height: 60%;
+        padding: 2;
+        margin-bottom: 1;
+        border-bottom: solid $accent;
+    }
+    #predefined-title {
+        text-style: bold;
+        margin-bottom: 2;
+        text-align: center;
+    }
+    .category-title {
+        text-style: bold;
+        color: $primary;
+        margin-top: 2;
+        margin-bottom: 1;
+        background: $primary;
+        color: white;
+        padding: 0 1;
+    }
+    FeedItem {
+        background: $surface;
+        border: solid $accent;
+        margin: 1 0;
+        padding: 1;
+         
+        height: 8;
+    }
+    FeedItem > Horizontal {
+        min-height: 3;
+        align: left top;
+    }
+    .feed-name {
+        text-style: bold;
+        color: $text;
+        margin-bottom: 1;
+    }
+    .feed-description {
+        color: $text-muted;
+        margin-bottom: 0;
+    }
+    .add-feed-btn {
+        width: auto;
+        min-width: 10;
+        margin-left: 2;
+    }
     #form-container {
-        height: 100%;
+        height: auto;
         padding: 2;
     }
     #form-title {
@@ -77,8 +202,29 @@ class AddFeedScreen(Screen):
             yield Button("← Back", variant="success", id="back-btn")
 
         with Container(id="add-feed-form"):
+            with VerticalScroll(id="feed-list-container"):
+                yield Label("🛡️ Technology & Hacking", classes="category-title")
+                yield FeedItem("feed-1", self.PREDEFINED_FEEDS["feed-1"])
+                yield FeedItem("feed-2", self.PREDEFINED_FEEDS["feed-2"])
+                yield FeedItem("feed-3", self.PREDEFINED_FEEDS["feed-3"])
+
+                yield Label("📰 News & Current Affairs", classes="category-title")
+                yield FeedItem("feed-4", self.PREDEFINED_FEEDS["feed-4"])
+                yield FeedItem("feed-5", self.PREDEFINED_FEEDS["feed-5"])
+                yield FeedItem("feed-6", self.PREDEFINED_FEEDS["feed-6"])
+
+                yield Label("💻 Technology & Development", classes="category-title")
+                yield FeedItem("feed-7", self.PREDEFINED_FEEDS["feed-7"])
+                yield FeedItem("feed-8", self.PREDEFINED_FEEDS["feed-8"])
+                yield FeedItem("feed-9", self.PREDEFINED_FEEDS["feed-9"])
+
+                yield Label("🎨 Science & Design", classes="category-title")
+                yield FeedItem("feed-10", self.PREDEFINED_FEEDS["feed-10"])
+                yield FeedItem("feed-11", self.PREDEFINED_FEEDS["feed-11"])
+                yield FeedItem("feed-12", self.PREDEFINED_FEEDS["feed-12"])
+        
             with VerticalScroll(id="form-container"):
-                yield Label("Add New Podcast Feed", id="form-title")
+                yield Label("Or Add Custom Feed", id="form-title")
                 yield Label("RSS Feed URL:", classes="label")
                 yield Input(placeholder="https://example.com/feed.xml", id="url-input")
                 yield Label("Feed Title (Optional):", classes="label")
@@ -88,7 +234,7 @@ class AddFeedScreen(Screen):
                 with Horizontal(id="form-buttons"):
                     yield Button("Add Feed", variant="primary", id="add-button")
                     yield Button("Cancel", variant="default", id="cancel-button")
-    
+
     def on_button_pressed(self, event: Button.Pressed) -> None:
         """Handle button clicks in the form."""
         if event.button.id == "back-btn":
@@ -97,22 +243,26 @@ class AddFeedScreen(Screen):
             self.add_feed()
         elif event.button.id == "cancel-button":
             self.dismiss()
-    
-    def add_feed(self) -> None:
+        elif event.button.id.startswith("add-") and event.button.id[4:] in self.PREDEFINED_FEEDS:
+            feed_id = event.button.id[4:]
+            url = self.PREDEFINED_FEEDS[feed_id]["url"]
+            self.add_feed(url)
+
+    def add_feed(self, url=None) -> None:
         """Add feed to database and update UI."""
-        url_input = self.query_one("#url-input", Input)
-        
-        url = url_input.value.strip()
-        
+        if url is None:
+            url_input = self.query_one("#url-input", Input)
+            url = url_input.value.strip()
+
         if not url:
             self.notify("Please enter a valid RSS feed URL", severity="error")
             return
-        
+
         try:
             db = DB()
             result = db.add_feed(url)
             db.close()
-            
+
             if isinstance(result, int):
                 self.notify(f"Feed added successfully!", severity="success")
                 # Refresh the main screen's feed list before dismissing
@@ -122,7 +272,7 @@ class AddFeedScreen(Screen):
                 self.app.load_feeds()
             else:
                 self.notify(f"Failed to add feed: {result}", severity="error")
-                
+
         except Exception as e:
             self.notify(f"Error adding feed: {e}", severity="error")
 
@@ -166,6 +316,10 @@ class CastAwayApp(App):
     }
     """
 
+    def __init__(self):
+        super().__init__()
+        self.all_feeds = []
+
     def compose(self) -> ComposeResult:
         yield Header()
 
@@ -183,24 +337,39 @@ class CastAwayApp(App):
 
     def load_feeds(self) -> None:
         """Load and display feeds from database."""
-        # Clear existing feeds
-        main_space = self.query_one("#main-space")
-        main_space.remove_children()
-        
         db = DB()
         feeds = db.fetch_feeds()
-        
-        # If no feeds in database, use fallback data
+        self.all_feeds = feeds
+        self.display_feeds(feeds)
+        db.close()
+
+    def display_feeds(self, feeds) -> None:
+        """Display given feeds in the main space."""
+        main_space = self.query_one("#main-space")
+        main_space.remove_children()
+
         if not feeds:
-            podcast_box = PodcastBox("No feeds", "null")
+            podcast_box = PodcastBox("No feeds found", "null")
             main_space.mount(podcast_box)
         else:
-            # Use database feeds
             for feed in feeds:
                 podcast_box = PodcastBox(feed[1], feed[3])  # title, rss_url
                 main_space.mount(podcast_box)
-        
-        db.close()
+
+    def on_input_changed(self, event: Input.Changed) -> None:
+        """Handle search input changes and filter feeds."""
+        if event.input.id == "search-input":
+            search_term = event.value.lower().strip()
+            if search_term:
+                # Filter feeds by title or author
+                filtered_feeds = [
+                    feed for feed in self.all_feeds
+                    if search_term in feed[1].lower() or search_term in (feed[2] or "").lower()
+                ]
+                self.display_feeds(filtered_feeds)
+            else:
+                # Show all feeds if search is empty
+                self.display_feeds(self.all_feeds)
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         """Handle button clicks."""
