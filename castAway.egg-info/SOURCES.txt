@@ -1,0 +1,12 @@
+README.md
+pyproject.toml
+castAway/cli.py
+castAway/core.py
+castAway/db.py
+castAway/test.py
+castAway.egg-info/PKG-INFO
+castAway.egg-info/SOURCES.txt
+castAway.egg-info/dependency_links.txt
+castAway.egg-info/entry_points.txt
+castAway.egg-info/requires.txt
+castAway.egg-info/top_level.txt
