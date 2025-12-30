@@ -28,8 +28,17 @@ Cast-Away is a lightweight, keyboard-driven terminal application designed for de
    cd castAway
    pip install -e .
    ```
+   or via pip
+   ```
+   pip install castaway-cli
+   ```
 
-2. **Run the App**
+
+2. **Upgrade**: Ensure you have the latest version of Cast-Away by running:
+   ```
+   pip install --upgrade castaway-cli
+   ```
+3. **Run the App**
 
    ```bash
    castAway
@@ -40,7 +49,7 @@ Cast-Away is a lightweight, keyboard-driven terminal application designed for de
    ```bash
    python -m castAway
    ```
-
+   
 📂 Project Structure
 ```
 castAway/
